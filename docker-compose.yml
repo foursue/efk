@@ -1,0 +1,21 @@
+fluentd:
+  build: ./fluentd
+  volumes:
+    - ./log:/fluentd/log
+    - ./fluentd/conf:/fluentd/etc
+  links:
+    - "elasticsearch"
+  ports:
+    - "24224:24224"
+elasticsearch:
+  image: elasticsearch
+  expose:
+    - 9200
+  ports:
+    - "9200:9200"
+kibana:
+  image: kibana
+  links:
+    - "elasticsearch"
+  ports:
+    - "5601:5601"

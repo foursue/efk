@@ -1,2 +1,7 @@
 FROM fluent/fluentd
-RUN ["gem", "install", "fluent-plugin-elasticsearch", "--no-rdoc", "--no-ri"]
+RUN apk add --no-cache --update --virtual .build-deps  build-base ruby-dev \
+  && gem install \
+	fluent-plugin-elasticsearch --no-document \
+  && gem sources --clear-all \
+  && apk del --purge .build-deps
+
